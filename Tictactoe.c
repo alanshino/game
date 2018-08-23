@@ -7,7 +7,8 @@ void menu(char **pc);
 void overgame(void);
 void startgame(char **pc);
 int wincheck(char **pc);
-void aicomputer(char **pc);
+int aicomputer(char **pc);
+int originalcheck(char **pc);
 
 int times=0;
 
@@ -129,10 +130,12 @@ void startgame(char **pc){
                 }
                 if (wincheck(pc)){
                     printf("you win!!!\n");
-                }else if(!wincheck(pc)){
-                    goto label1;
-                }else{
+                }else if(aicomputer(pc)){
                     printf("you lose the game\n");
+                    //goto label1;
+                }else{
+                    //printf("you lose the game\n");
+                    goto label1;
                 }
             }else{
                 printf("the block is already put a car\n");
@@ -165,12 +168,14 @@ void startgame(char **pc){
                 }else{
                     goto label4;
                 }
-                if (wincheck(pc)){
+                if (aicomputer(pc)){
                     printf("you win!!!\n");
-                }else if(!wincheck(pc)){
-                    goto label3;
-                }else{
+                }else if(wincheck(pc)){
                     printf("you lose the game\n");
+                    //goto label3;
+                }else{
+                    //printf("you lose the game\n");
+                    goto label3;
                 }
             }else{
                 printf("the block is already put a car\n");
@@ -189,7 +194,7 @@ void startgame(char **pc){
     free(pp);
 }
 
-int wincheck(char **pc){
+int originalcheck(char **pc){
     if ((*(*(pc+0)+0)=='O'&&*(*(pc+0)+1)=='O'&&*(*(pc+0)+2)=='O')||(*(*(pc+0)+0)=='X'&&*(*(pc+0)+1)=='X'&&*(*(pc+0)+2)=='X')){
         return 1;
     }else if ((*(*(pc+1)+0)=='O'&&*(*(pc+1)+1)=='O'&&*(*(pc+1)+2)=='O')||(*(*(pc+1)+0)=='X'&&*(*(pc+1)+1)=='X'&&*(*(pc+1)+2)=='X')){
@@ -211,6 +216,46 @@ int wincheck(char **pc){
     }
 }
 
-void aicomputer(char **pc){
+int wincheck(char **pc){
+    if ((*(*(pc+0)+0)=='O'&&*(*(pc+0)+1)=='O'&&*(*(pc+0)+2)=='O')){
+        return 1;
+    }else if ((*(*(pc+1)+0)=='O'&&*(*(pc+1)+1)=='O'&&*(*(pc+1)+2)=='O')){
+        return 1;
+    }else if ((*(*(pc+2)+0)=='O'&&*(*(pc+2)+1)=='O'&&*(*(pc+2)+2)=='O')){
+        return 1;
+    }else if ((*(*(pc+0)+0)=='O'&&*(*(pc+1)+0)=='O'&&*(*(pc+2)+0)=='O')){
+        return 1;
+    }else if ((*(*(pc+0)+1)=='O'&&*(*(pc+1)+1)=='O'&&*(*(pc+2)+1)=='O')){
+        return 1;
+    }else if ((*(*(pc+0)+2)=='O'&&*(*(pc+1)+2)=='O'&&*(*(pc+2)+2)=='O')){
+        return 1;
+    }else if ((*(*(pc+0)+0)=='O'&&*(*(pc+1)+1)=='O'&&*(*(pc+2)+2)=='O')){
+        return 1;
+    }else if ((*(*(pc+0)+2)=='O'&&*(*(pc+1)+1)=='O'&&*(*(pc+2)+0)=='O')){
+        return 1;
+    }else{
+        return 0;
+    }
+}
 
+int aicomputer(char **pc){
+    if (*(*(pc+0)+0)=='X'&&*(*(pc+0)+1)=='X'&&*(*(pc+0)+2)=='X'){
+        return 1;
+    }else if ((*(*(pc+1)+0)=='X'&&*(*(pc+1)+1)=='X'&&*(*(pc+1)+2)=='X')){
+        return 1;
+    }else if ((*(*(pc+2)+0)=='X'&&*(*(pc+2)+1)=='X'&&*(*(pc+2)+2)=='X')){
+        return 1;
+    }else if ((*(*(pc+0)+0)=='X'&&*(*(pc+1)+0)=='X'&&*(*(pc+2)+0)=='X')){
+        return 1;
+    }else if ((*(*(pc+0)+1)=='X'&&*(*(pc+1)+1)=='X'&&*(*(pc+2)+1)=='X')){
+        return 1;
+    }else if ((*(*(pc+0)+2)=='X'&&*(*(pc+1)+2)=='X'&&*(*(pc+2)+2)=='X')){
+        return 1;
+    }else if ((*(*(pc+0)+0)=='X'&&*(*(pc+1)+1)=='X'&&*(*(pc+2)+2)=='X')){
+        return 1;
+    }else if ((*(*(pc+0)+2)=='X'&&*(*(pc+1)+1)=='X'&&*(*(pc+2)+0)=='X')){
+        return 1;
+    }else{
+        return 0;
+    }
 }
