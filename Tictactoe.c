@@ -10,14 +10,25 @@ int wincheck(char **pc);
 int aicomputer(char **pc);
 int originalcheck(char **pc);
 void startdouble(char **pc);
+void smartAI(char **pc);
 
 int times=0;
 
 int main(int argc,char **argv){
     char **pc=NULL;
     pc=malloc(sizeof(char *)*3);
+    if (pc==NULL){
+        printf("Call memory failed\n");
+        exit(1);
+    }
     for (int i=0;i<3;i++){
         *(pc+i)=malloc(sizeof(char));
+    }
+    for (int i=0;i<3;i++){
+        if (*(pc+i)==NULL){
+            printf("Call memory failed\n");
+            exit(1);
+        }
     }
     initialization(pc);
     print(pc);
@@ -54,6 +65,10 @@ void print(char **pc){
 void menu(char **pc){
     char *ps=malloc(sizeof(char)*10);
     char *pi=malloc(sizeof(char)*10);
+    if (ps==NULL||pi==NULL){
+        printf("Call memory failed\n");
+        exit(1);
+    }
     label:
     printf("Do you want to start TicTacToe game: (Y/y or N/n): ");
     scanf("%s",ps);
@@ -92,8 +107,18 @@ void startgame(char **pc){
     int *pi=malloc(sizeof(int)*2);
     int *pp=malloc(sizeof(int)*2);
     int **panswer=malloc(sizeof(int *)*3);
+    if (pi==NULL||pp==NULL||panswer==NULL){
+        printf("Call memory failed\n");
+        exit(1);
+    }
     for (int i=0;i<3;i++){
         *(panswer+i)=malloc(sizeof(int)*3);
+    }
+    for (int i=0;i<3;i++){
+        if (*(panswer+i)==NULL){
+            printf("Call memory failed\n");
+            exit(1);
+        }
     }
     for (int i=0;i<3;i++){
         for (int j=0;j<3;j++){
@@ -283,8 +308,18 @@ void startdouble(char **pc){
     char c,check;
     int **panswer=malloc(sizeof(int *)*3);
     int *pi=malloc(sizeof(int)*2);
+    if (ps==NULL||panswer==NULL||pi==NULL){
+        printf("Call memory failed\n");
+        exit(1);
+    }
     for (int i=0;i<3;i++){
         *(panswer+i)=malloc(sizeof(int)*3);
+    }
+    for (int i=0;i<3;i++){
+        if (*(panswer+i)==NULL){
+            printf("Call memory failed\n");
+            exit(1);
+        }
     }
     for (int i=0;i<3;i++){
         for (int j=0;j<3;j++){
@@ -328,9 +363,9 @@ void startdouble(char **pc){
                     }
                 }
                 if (wincheck(pc)){
-                    printf("Player one wins\n");
+                    printf("Player one 'O' wins\n");
                 }else if (aicomputer(pc)){
-                    printf("Player two wins\n");
+                    printf("Player two 'X' wins\n");
                 }else{
                     for (int i=0;i<3;i++){
                         for (int j=0;j<3;j++){
@@ -381,10 +416,10 @@ void startdouble(char **pc){
                         goto label5;
                     }
                 }
-                if (wincheck(pc)){
-                    printf("Player one wins\n");
-                }else if (aicomputer(pc)){
-                    printf("Player two wins\n");
+                if (aicomputer(pc)){
+                    printf("Player one 'X' wins\n");
+                }else if (wincheck(pc)){
+                    printf("Player two 'O' wins\n");
                 }else{
                     for (int i=0;i<3;i++){
                         for (int j=0;j<3;j++){
