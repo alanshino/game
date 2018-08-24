@@ -129,6 +129,7 @@ void startgame(char **pc){
     printf("start Single match\n");
     label:
     printf("How you want to attack first or later [ O is first ],[ X is later ]: ");
+    while ((c=getchar())!='\n'&&c!=EOF);	
     fflush(stdin);
     scanf("%c%c",&c,&check);
     if (c=='O'||c=='o'){
@@ -330,6 +331,7 @@ void startdouble(char **pc){
     printf("start double player\n");
     label:
     printf("What you want to attack first is 'O' or 'X' : ");
+    while ((c=getchar())!='\n'&&c!=EOF);
     fflush(stdin);
     scanf("%c%c",&c,&check);
     if (c=='O'||c=='o'){
