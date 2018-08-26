@@ -33,6 +33,8 @@ int main(int argc,char **argv){
     initialization(pc);
     print(pc);
     menu(pc);
+    /*smartAI(pc);
+    printf("\n%d",times);*/
     for (int i=0;i<3;i++){
         free(*(pc+i));
     }
@@ -51,14 +53,29 @@ void initialization(char **p){
 void print(char **pc){
     times++;
     if (times==1){
-        printf("already initialization\n");
+        printf("already initialization\n\n");
+        printf("      Tic Tac Toe GAME\n\n");
+        printf("             |             |     \n");
+        printf("  ( 1 , 1 )  |  ( 1 , 2 )  |  ( 1 , 3 ) \n");
+        printf("             |             |     \n");
+        printf("-----------------------------------------\n");
+        printf("             |             |     \n");
+        printf("  ( 2 , 1 )  |  ( 2 , 2 )  |  ( 2 , 3 )  \n");
+        printf("             |             |         \n");
+        printf("-----------------------------------------\n");
+        printf("             |             |         \n");
+        printf("  ( 3 , 1 )  |  ( 3 , 2 )  |  ( 3 , 3 )  \n");
+        printf("             |             |     \n\n");
     }else{
-        for (int i=0;i<3;i++){
-            for (int j=0;j<3;j++){
-                printf("%c ",*(*(pc+i)+j));
-            }
-            printf("\n");
-        }
+        printf("     |     |     \n");
+        printf("  %c  |  %c  |  %c \n", *(*(pc+0)+0), *(*(pc+0)+1), *(*(pc+0)+2));
+        printf("_____|_____|_____\n");
+        printf("     |     |     \n");
+        printf("  %c  |  %c  |  %c \n", *(*(pc+1)+0), *(*(pc+1)+1), *(*(pc+1)+2));
+        printf("_____|_____|_____\n");
+        printf("     |     |     \n");
+        printf("  %c  |  %c  |  %c \n", *(*(pc+2)+0), *(*(pc+2)+1), *(*(pc+2)+2));
+        printf("     |     |     \n\n");
     }
 }
 
@@ -74,12 +91,14 @@ void menu(char **pc){
     scanf("%s",ps);
     if (*ps=='Y'||*ps=='y'){
         label1:
-        printf("Double play or Single match [(D/d or 2 to Double play),(S/s or 1 to Single match)]: ");
+        printf("Double play or Single match [(D/d or 2 to Double play),(S/s or 1 to Single match),(A/a or 3 to smart AI)]: ");
         scanf("%s",pi);
         if (*pi=='D'||*pi=='d'||*pi=='2'){
             startdouble(pc);
         }else if (*pi=='S'||*pi=='s'||*ps=='1'){
             startgame(pc);
+        }else if (*pi=='A'||*pi=='a'||*pi=='3'){
+            smartAI(pc);
         }else{
             goto label1;
         }
@@ -128,8 +147,8 @@ void startgame(char **pc){
     system("CLS");
     printf("start Single match\n");
     label:
-    printf("How you want to attack first or later [ O is first ],[ X is later ]: ");
-    while ((c=getchar())!='\n'&&c!=EOF);	
+    printf("How you want to selected camp [ O/o circle camp ],[ X/x cross camp ]: ");
+    while ((c=getchar())!='\n'&&c!=EOF);
     fflush(stdin);
     scanf("%c%c",&c,&check);
     if (c=='O'||c=='o'){
@@ -330,7 +349,7 @@ void startdouble(char **pc){
     system("CLS");
     printf("start double player\n");
     label:
-    printf("What you want to attack first is 'O' or 'X' : ");
+    printf("How you want to selected camp [ O/o circle camp ],[ X/x cross camp ]: ");
     while ((c=getchar())!='\n'&&c!=EOF);
     fflush(stdin);
     scanf("%c%c",&c,&check);
@@ -453,4 +472,50 @@ void startdouble(char **pc){
     free(pi);
     free(ps);
     return ;
+}
+
+void smartAI(char **pc){
+    int **pi=malloc(sizeof(int *)*3);
+    int *pp=malloc(sizeof(int)*2);
+    char c;
+    for (int i=0;i<3;i++){
+        *(pi+i)=malloc(sizeof(int)*3);
+    }
+    for (int i=0;i<3;i++){
+        for (int j=0;j<3;j++){
+            *(*(pi+i)+j)=0;
+        }
+    }
+    label:
+    printf("How you want to attack first or later [ O is first ],[ X is later ]: ");
+    while ((c=getchar())!='\n'&&c!=EOF);
+    scanf("%c",&c);
+    if (c=='O'||c=='o'){
+            label1:
+        printf("input row and col: ");
+        scanf("%d%d",pp+0,pp+1);
+        if (*(pp+0)>3||*(pp+0)<0||*(pp+1)>3||*(pp+1)<0){
+            printf("input is error\n");
+            goto label1;
+        }
+    }else if (c=='X'||c=='x'){
+        if (*(*(pc+1)+1)=='-'){
+            *(*(pi+1)+1)=1;
+            *(*(pc+1)+1)='O';
+            print(pc);
+        }
+    }else{
+        printf("input is error");
+        goto label;
+    }
+  /*  for (int i=0;i<3;i++){
+        for (int j=0;j<3;j++){
+            printf("%d ",*(*(pi+i)+j));
+        }
+        printf("\n");
+    }  */
+    for (int i=0;i<3;i++){
+        free(*(pi+i));
+    }
+    free(pi);
 }
