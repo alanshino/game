@@ -11,11 +11,15 @@ int aicomputer(char **pc);
 int originalcheck(char **pc);
 void startdouble(char **pc);
 void smartAI(char **pc);
+typedef void (*pvoid)(char **);
+typedef int (*pint)(char **);
 
 int times=0;
 
 int main(int argc,char **argv){
     char **pc=NULL;
+    //pint pfunint=initialization;
+    pvoid pfunvoid=initialization;
     pc=malloc(sizeof(char *)*3);
     if (pc==NULL){
         printf("Call memory failed\n");
@@ -30,9 +34,11 @@ int main(int argc,char **argv){
             exit(1);
         }
     }
-    initialization(pc);
-    print(pc);
-    menu(pc);
+    (**pfunvoid)(pc);
+    pfunvoid=print;
+    (**pfunvoid)(pc);
+    pfunvoid=menu;
+    (**pfunvoid)(pc);
     /*smartAI(pc);
     printf("\n%d",times);*/
     for (int i=0;i<3;i++){
@@ -118,7 +124,7 @@ void overgame(void){
     printf("Thank you\n");
 }
 
-void startgame(char **pc){
+void startgame(char **pc){  //單人對戰
     srand(time(NULL));
     char c,check;
     int flat=9;
@@ -322,8 +328,10 @@ int aicomputer(char **pc){
     }
 }
 
-void startdouble(char **pc){
+void startdouble(char **pc){           //雙人對戰
     int flat=9;
+    int testnumber=9;
+    int testmath=9;
     char *ps=malloc(sizeof(char)*10);
     char c,check;
     int **panswer=malloc(sizeof(int *)*3);
@@ -355,6 +363,7 @@ void startdouble(char **pc){
     scanf("%c%c",&c,&check);
     if (c=='O'||c=='o'){
         label2:
+        flat=9;
         printf("Player one time\n");
         printf("input row and col: ");
         scanf("%d%d",pi+0,pi+1);
@@ -366,6 +375,23 @@ void startdouble(char **pc){
                 *(*(panswer+*(pi+0)-1)+*(pi+1)-1)=1;
                 *(*(pc+*(pi+0)-1)+*(pi+1)-1)='O';
                 print(pc);
+                if (wincheck(pc)){
+                    printf("Player one 'O' wins\n");
+                    exit(1);
+                }else{
+                    for (int i=0;i<3;i++){
+                        for (int j=0;j<3;j++){
+                            if (*(*(panswer+i)+j)!=0){
+                                testmath--;
+                            }
+                        }
+                    }
+                    if (testmath>0){
+                    }else{
+                        printf("Tic Tac Toe is over ,This game is tied\n");
+                        exit(1);
+                    }
+                }
                 printf("Change player second operation\n");
                 label3:
                 printf("input row and col: ");
@@ -396,6 +422,7 @@ void startdouble(char **pc){
                         }
                     }
                     if (flat>0){
+                        testmath=9;
                         goto label2;
                     }else{
                         printf("Tic Tac Toe is over ,This game is tied\n");
@@ -409,6 +436,7 @@ void startdouble(char **pc){
         }
     }else if (c=='X'||c=='x'){
         label4:
+        flat=9;
         printf("Player one time\n");
         printf("input row and col: ");
         scanf("%d%d",pi+0,pi+1);
@@ -420,6 +448,23 @@ void startdouble(char **pc){
                 *(*(panswer+*(pi+0)-1)+*(pi+1)-1)=1;
                 *(*(pc+*(pi+0)-1)+*(pi+1)-1)='X';
                 print(pc);
+                if (aicomputer(pc)){
+                    printf("Player one 'X' wins\n");
+                    exit(1);
+                }else{
+                    for (int i=0;i<3;i++){
+                        for (int j=0;j<3;j++){
+                            if (*(*(panswer+i)+j)!=0){
+                                testnumber--;
+                            }
+                        }
+                    }
+                    if (testnumber>0){
+                    }else{
+                        printf("Tic Tac Toe is over ,This game is tied\n");
+                        exit(1);
+                    }
+                }
                 printf("Change player second operation\n");
                 label5:
                 printf("input row and col: ");
@@ -450,6 +495,7 @@ void startdouble(char **pc){
                         }
                     }
                     if (flat>0){
+                        testnumber=9;
                         goto label4;
                     }else{
                         printf("Tic Tac Toe is over ,This game is tied\n");
