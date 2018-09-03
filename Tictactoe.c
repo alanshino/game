@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-void initialization(char **p);
+void initialization(char **pc);
 void print(char **pc);
 void menu(char **pc);
 void overgame(void);
@@ -60,7 +60,7 @@ void print(char **pc){
     times++;
     if (times==1){
         printf("already initialization\n\n");
-        printf("      Tic Tac Toe GAME\n\n");
+        printf("            Tic Tac Toe GAME\n\n");
         printf("             |             |     \n");
         printf("  ( 1 , 1 )  |  ( 1 , 2 )  |  ( 1 , 3 ) \n");
         printf("             |             |     \n");
@@ -73,15 +73,15 @@ void print(char **pc){
         printf("  ( 3 , 1 )  |  ( 3 , 2 )  |  ( 3 , 3 )  \n");
         printf("             |             |     \n\n");
     }else{
-        printf("     |     |     \n");
-        printf("  %c  |  %c  |  %c \n", *(*(pc+0)+0), *(*(pc+0)+1), *(*(pc+0)+2));
-        printf("_____|_____|_____\n");
-        printf("     |     |     \n");
-        printf("  %c  |  %c  |  %c \n", *(*(pc+1)+0), *(*(pc+1)+1), *(*(pc+1)+2));
-        printf("_____|_____|_____\n");
-        printf("     |     |     \n");
-        printf("  %c  |  %c  |  %c \n", *(*(pc+2)+0), *(*(pc+2)+1), *(*(pc+2)+2));
-        printf("     |     |     \n\n");
+        printf("        |     |     \n");
+        printf("     %c  |  %c  |  %c \n", *(*(pc+0)+0), *(*(pc+0)+1), *(*(pc+0)+2));
+        printf("   _____|_____|_____\n");
+        printf("        |     |     \n");
+        printf("     %c  |  %c  |  %c \n", *(*(pc+1)+0), *(*(pc+1)+1), *(*(pc+1)+2));
+        printf("   _____|_____|_____\n");
+        printf("        |     |     \n");
+        printf("     %c  |  %c  |  %c \n", *(*(pc+2)+0), *(*(pc+2)+1), *(*(pc+2)+2));
+        printf("        |     |     \n\n");
     }
 }
 
@@ -97,7 +97,9 @@ void menu(char **pc){
     scanf("%s",ps);
     if (*ps=='Y'||*ps=='y'){
         label1:
-        printf("Double play or Single match [(D/d or 2 to Double play),(S/s or 1 to Single match),(A/a or 3 to smart AI)]: ");
+        printf("   [(D/d or 2 to Double play)]\n");
+        printf("   [(S/s or 1 to Single match)]\n");
+        printf("   [(A/a or 3 to smart AI player)]: ");
         scanf("%s",pi);
         if (*pi=='D'||*pi=='d'||*pi=='2'){
             startdouble(pc);
@@ -106,6 +108,8 @@ void menu(char **pc){
         }else if (*pi=='A'||*pi=='a'||*pi=='3'){
             smartAI(pc);
         }else{
+            system("CLS");
+            printf("   input error\n\n");
             goto label1;
         }
     }else if(*ps=='N'||*ps=='n'){
@@ -523,6 +527,7 @@ void startdouble(char **pc){           //Âù¤H¹ï¾Ô
 void smartAI(char **pc){
     int **pi=malloc(sizeof(int *)*3);
     int *pp=malloc(sizeof(int)*2);
+    int testmath=9;
     char c;
     for (int i=0;i<3;i++){
         *(pi+i)=malloc(sizeof(int)*3);
@@ -537,12 +542,42 @@ void smartAI(char **pc){
     while ((c=getchar())!='\n'&&c!=EOF);
     scanf("%c",&c);
     if (c=='O'||c=='o'){
-            label1:
+        label1:
         printf("input row and col: ");
         scanf("%d%d",pp+0,pp+1);
         if (*(pp+0)>3||*(pp+0)<0||*(pp+1)>3||*(pp+1)<0){
             printf("input is error\n");
             goto label1;
+        }else if (*(*(pi+*(pp+0)-1)+*(pp+1)-1)==0){
+            *(*(pi+*(pp+0)-1)+*(pp+1)-1)=1;
+            *(*(pc+*(pp+0)-1)+*(pp+1)-1)='O';
+            print(pc);
+            if (wincheck(pc)){
+                printf("Player one 'O' wins\n");
+                exit(1);
+            }else{
+                for (int i=0;i<3;i++){
+                    for (int j=0;j<3;j++){
+                        if (*(*(pi+i)+j)!=0){
+                            testmath--;
+                        }
+                    }
+                }
+                if (testmath>0){
+                }else{
+                    printf("Tic Tac Toe is over ,This game is tied\n");
+                    exit(1);
+                }
+            }
+        }
+        if (*(pp+0)==1){
+            if (*(pp+1)==1){
+
+            }else if (*(pp+1)==2){
+
+            }else if (*(pp+1)==3){
+
+            }
         }
     }else if (c=='X'||c=='x'){
         if (*(*(pc+1)+1)=='-'){
@@ -551,7 +586,7 @@ void smartAI(char **pc){
             print(pc);
         }
     }else{
-        printf("input is error");
+        printf("input is error\n");
         goto label;
     }
   /*  for (int i=0;i<3;i++){
@@ -563,5 +598,6 @@ void smartAI(char **pc){
     for (int i=0;i<3;i++){
         free(*(pi+i));
     }
+    free(pp);
     free(pi);
 }
