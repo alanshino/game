@@ -3,6 +3,15 @@
 #include <assert.h>
 #include <windows.h>
 #include <conio.h>
+#include <wchar.h>
+//#include <local.h>
+#include <stdint.h>
+//int8_t
+//int64_t
+//wprintf wprintf(L"%lc\n",wc);
+//wscanf
+//L'字'
+int my_books(char *);
 int check_input(char *);
 void go_sign_up(void);
 void go_sign_in(void);
@@ -25,12 +34,13 @@ typedef void (*PFlibrary)(library*);
 void user_account(void);
 PFunvoid pfunvoid;
 PFunint pfunint;
-int *(*arraya(int n))[]{
-    int *(*p)[5]=malloc(sizeof(int*)*5);
+size_t *(*arraya(size_t n))[]{
+    size_t *(*p)[5]=malloc(sizeof(size_t*)*5);
     return p;
 }
-static char user_name[20];
-static char user_password[20];
+typedef size_t *(*(*parraya)(size_t n))[];
+static char user_name[30];
+static char user_password[30];
 static char user_mail[50];
 library *plibrary,*current,previous;
 void print_library(library *);
@@ -301,10 +311,22 @@ void print_library(library *pplibrary){
     for (int i=0;i<15;i++){
         if (!(Compare_string(pc,(pplibrary+i)->ptitle))){
             if ((pplibrary+i)->books>0){
-                (pplibrary+i)->books--;
-                printf("感謝您的借閱,您借的書籍是%s",(plibrary+i)->ptitle);
+                printf("感謝您的借閱,您借的書籍是%s\n",(plibrary+i)->ptitle);
+                my_books(pc);
+                label1:
+                printf("請輸入您要借閱的數目: ");
+                scanf("%s",pc);
+                if ((pplibrary+i)->books<atoi(pc)){
+                    printf("您輸入的數目超過庫存,請查核\n");
+                    goto label1;
+                }else{
+                    (pplibrary+i)->books-=atoi(pc);
+                    printf("您借閱的數目為%d\n",atoi(pc));
+                    system("pause");
+                }
             }else{
                 printf("非常抱歉,您目前借閱的書籍尚無庫存\n");
+                system("pause");
             }
         }else{
             check++;
@@ -328,10 +350,12 @@ int Returning_books(library *pplibrary){
     for (int i=0;i<15;i++){
         if (!(Compare_string(pc,(pplibrary+i)->ptitle))){
             if ((pplibrary+i)->books>0){
-                (pplibrary+i)->books++;
-                printf("感謝您的歸還,您歸還的書籍是%s",(plibrary+i)->ptitle);
-            }else{
-                printf("感謝您的歸還,您歸還的書籍是%s",(plibrary+i)->ptitle);
+                //(pplibrary+i)->books++;
+                printf("感謝您的歸還,您歸還的書籍是%s\n",(plibrary+i)->ptitle);
+                system("pause");
+                printf("請輸入您要歸還的冊數: ");
+                scanf("%s",pc);
+                (pplibrary+i)->books+=atoi(pc);
             }
         }else{
             check++;
@@ -432,4 +456,11 @@ void copy_string(char *pc,char *pbook){
         pc++;
         pbook++;
     }
+}
+
+int my_books(char *pc){
+    static char pbook[30];
+    copy_string(pc,pbook);
+    //printf("%s",pbook);
+    return 0;
 }
