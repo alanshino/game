@@ -10,6 +10,8 @@ int wincheck(char **pc);
 int aicomputer(char **pc);
 int originalcheck(char **pc);
 void startdouble(char **pc);
+
+
 void smartAI(char **pc);
 typedef void (*pvoid)(char **);
 typedef int (*pint)(char **);
@@ -60,18 +62,16 @@ void print(char **pc){
     times++;
     if (times==1){
         printf("already initialization\n\n");
-        printf("            Tic Tac Toe GAME\n\n");
-        printf("             |             |     \n");
-        printf("  ( 1 , 1 )  |  ( 1 , 2 )  |  ( 1 , 3 ) \n");
-        printf("             |             |     \n");
-        printf("-----------------------------------------\n");
-        printf("             |             |     \n");
-        printf("  ( 2 , 1 )  |  ( 2 , 2 )  |  ( 2 , 3 )  \n");
-        printf("             |             |         \n");
-        printf("-----------------------------------------\n");
-        printf("             |             |         \n");
-        printf("  ( 3 , 1 )  |  ( 3 , 2 )  |  ( 3 , 3 )  \n");
-        printf("             |             |     \n\n");
+        printf("             Tic Tac Toe GAME\n\n");
+        printf("                 |     |     \n");
+        printf("ROW 1:        1  |  2  |  3 \n");
+        printf("            _____|_____|_____\n");
+        printf("                 |     |     \n");
+        printf("ROW 2:        4  |  5  |  6 \n");
+        printf("            _____|_____|_____\n");
+        printf("                 |     |     \n");
+        printf("ROW 3:        7  |  8  |  9 \n");
+        printf("                 |     |     \n\n");
     }else{
         printf("        |     |     \n");
         printf("     %c  |  %c  |  %c \n", *(*(pc+0)+0), *(*(pc+0)+1), *(*(pc+0)+2));
