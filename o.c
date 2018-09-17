@@ -50,6 +50,7 @@ size_t blocks=0;
 size_t check=0;
 void stock_book(library *);
 void copy_string(char *,char *);
+int characters(char *);
 PFlibrary pflibrary;
 
 int main(int argc,char **argv){
@@ -463,4 +464,12 @@ int my_books(char *pc){
     copy_string(pc,pbook);
     //printf("%s",pbook);
     return 0;
+}
+
+int characters(char *pc){
+    int times=0;
+    while (*pc!='\0'){
+        times++;
+    }
+    return times;
 }
