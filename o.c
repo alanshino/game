@@ -51,6 +51,7 @@ size_t check=0;
 void stock_book(library *);
 void copy_string(char *,char *);
 int characters(char *);
+int *howlong_name;
 PFlibrary pflibrary;
 
 int main(int argc,char **argv){
@@ -59,7 +60,7 @@ int main(int argc,char **argv){
     //PFlibrary pflibrary=Donation;
     (********************pfunvoid)();
     char *pc=malloc(sizeof(char)*20);
-    char c;
+    char c,*pstring_test=NULL;
     (********************pfunint)(4,2);
     printf("歡迎登入圖書館系統\n\n");
     label:
@@ -111,24 +112,57 @@ int check_input(char *pc){
 
 void go_sign_up(void){
     char c;
-    FILE *Fp1;
-    Fp1=fopen("user.txt","a+");
+    FILE *fp1;
+    howlong_name=malloc(sizeof(int)*3);
+    if (howlong_name==NULL){
+        printf("記憶體分配錯誤\n");
+        exit(1);
+    }
+    fp1=fopen("user.txt","a+");
     while ((c=getchar())!='\n'&&c!=EOF);
     system("CLS");
     (********************pfunint)(4,2);
     printf("請輸入您的使用者名稱: ");
     scanf("%[^'\n']",user_name);
+    if (fp1!=NULL){
+        *(howlong_name+0)=characters(user_name);
+        //printf("%d\n",*(howlong_name+0));
+        fputs(user_name,fp1);
+        fputc(' ',fp1);
+    }else{
+        printf("檔案抓取失敗\n");
+        exit(1);
+    }
     while ((c=getchar())!='\n'&&c!=EOF);
     printf("請輸入您的使用者密碼: ");
     scanf("%[^'\n']",user_password);
+    if (fp1!=NULL){
+        *(howlong_name+1)=characters(user_password);
+        //printf("%d\n",*(howlong_name+1));
+        fputs(user_password,fp1);
+        fputc(' ',fp1);
+    }else{
+        printf("檔案抓取失敗\n");
+        exit(1);
+    }
     while ((c=getchar())!='\n'&&c!=EOF);
     printf("請輸入您的使用者信箱: ");
     scanf("%[^'\n']",user_mail);
+    if (fp1!=NULL){
+        *(howlong_name+2)=characters(user_mail);
+        //printf("%d\n",*(howlong_name+2));
+        fputs(user_mail,fp1);
+        fputc(' ',fp1);
+    }else{
+        printf("檔案抓取失敗\n");
+        exit(1);
+    }
     printf("使用者名稱 : %s\n",user_name);
     printf("使用者密碼 : %s\n",user_password);
     printf("使用者信箱 : %s\n",user_mail);
     printf("註冊完成,即將跳轉\n");
     system("pause");
+    fclose(fp1);
     Library_menu();
 }
 
@@ -371,9 +405,25 @@ int Returning_books(library *pplibrary){
 }
 
 void user_account(void){
-    printf("使用者名稱 : %s\n",user_name);
-    printf("使用者密碼 : %s\n",user_password);
-    printf("使用者信箱 : %s\n",user_mail);
+    FILE *fp1;
+    char *pc,*puser_data=malloc(sizeof(char)*50);
+    fp1=fopen("user.txt","a+");
+    if (fp1!=NULL){
+        pc=fgets(puser_data,*(howlong_name+0)+2,fp1);
+        printf("使用者名稱 : %s\n",puser_data);
+    }else{
+        printf("檔案讀取失敗\n");
+        exit(1);
+    }
+    fgets(puser_data,*(howlong_name+1)+2,fp1);
+    printf("使用者名稱 : %s\n",puser_data);
+    fgets(puser_data,*(howlong_name+2)+2,fp1);
+    printf("使用者名稱 : %s\n",puser_data);
+    //printf("使用者名稱 : %s\n",user_name);
+    //printf("使用者密碼 : %s\n",user_password);
+    //printf("使用者信箱 : %s\n",user_mail);
+    fclose(fp1);
+    system("pause");
 }
 
 void Donation(library *pplibrary){
@@ -469,7 +519,9 @@ int my_books(char *pc){
 int characters(char *pc){
     int times=0;
     while (*pc!='\0'){
+        //printf("%d\n",times);
         times++;
+        pc++;
     }
     return times;
 }
