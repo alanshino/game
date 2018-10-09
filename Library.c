@@ -29,6 +29,13 @@ typedef struct Library{
     int books;
     struct Library*pnext;
 }library;
+typedef struct Library_Book{
+    char *pbook_name;
+    char *pauthor;
+    char *llink;
+    char *rlink;
+    int books;
+}library_book;
 void Donation(library *);
 typedef void (*PFlibrary)(library*);
 void user_account(void);
@@ -121,7 +128,7 @@ void go_sign_up(void){
     fp1=fopen("user.txt","a+");
     while ((c=getchar())!='\n'&&c!=EOF);
     system("CLS");
-    (********************pfunint)(4,2);
+    //(********************pfunint)(4,2);
     printf("請輸入您的使用者名稱: ");
     scanf("%[^'\n']",user_name);
     if (fp1!=NULL){
@@ -200,6 +207,10 @@ void go_sign_in(void){
     free(pc);
 }
 
+void fmybook(library *pplibrary){
+
+}
+
 void go_Administrator(void){
 
 }
@@ -229,7 +240,7 @@ void Library_menu(void){
             pflibrary=stock_book;
             (************pflibrary)(plibrary);
         }else if (user_input==5){
-
+            fmybook(plibrary);
         }else if (user_input==6){
             pflibrary=Donation;
             (************pflibrary)(plibrary);
@@ -306,10 +317,11 @@ void initialization(void){
     blocks=14;
     check=15;
     current=(plibrary+14);
-    printf("書名:%s ",(plibrary+0)->ptitle);
-    printf("作者:%s ",(plibrary+0)->pauthor);
-    printf("冊數:%d ",(plibrary+0)->books);
+    //printf("書名:%s ",(plibrary+0)->ptitle);
+    //printf("作者:%s ",(plibrary+0)->pauthor);
+    //printf("冊數:%d ",(plibrary+0)->books);
     //free(plibrary);
+    printf("Welcome to the Tokyo Institute of Technology's library");
 }
 
 void gotoxy(int Xposition, int Yposition){
