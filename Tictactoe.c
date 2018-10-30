@@ -97,9 +97,9 @@ void menu(char **pc){
     scanf("%s",ps);
     if (*ps=='Y'||*ps=='y'){
         label1:
-        printf("   [(D/d or 2 to Double play)]\n");
-        printf("   [(S/s or 1 to Single match)]\n");
-        printf("   [(A/a or 3 to smart AI player)]: ");
+        printf("   [ Use D/d or 2 Enter double mode ]\n");
+        printf("   [ Use S/s or 1 Enter Single mode ]\n");
+        printf("   [ Use A/a or 3 Enter AI mode ]: ");
         scanf("%s",pi);
         if (*pi=='D'||*pi=='d'||*pi=='2'){
             startdouble(pc);
