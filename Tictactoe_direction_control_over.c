@@ -46,7 +46,7 @@ int main(int argc,char **argv)
             printf("This game is tied\n");
             _sleep(2000);
             //system("psuae");
-            system("Tictactoe_direction_control.exe");
+            system("Tictactoe_direction_control_over.exe");
         }
         position=getch();
         if (position==111){
@@ -74,7 +74,7 @@ int main(int argc,char **argv)
                     printf("Input instruction :  ");
                 }
                 scanf("%c",&Code);
-                if (Code=='y' || Code=='Y') {system("Tictactoe_direction_control.exe");}
+                if (Code=='y' || Code=='Y') {system("Tictactoe_direction_control_over.exe");}
                 else if (Code=='n' || Code=='N'){
                     gotoxy(3,13);
                     printf("Goobye !!!\n");
@@ -118,7 +118,7 @@ int main(int argc,char **argv)
                     printf("Input instruction :  ");
                 }
                 scanf("%c",&Code);
-                if (Code=='y' || Code=='Y') {system("Tictactoe_direction_control.exe");}
+                if (Code=='y' || Code=='Y') {system("Tictactoe_direction_control_over.exe");}
                 else if (Code=='n' || Code=='N'){
                     gotoxy(3,13);
                     printf("Goobye !!!\n");
