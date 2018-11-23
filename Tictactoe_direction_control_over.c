@@ -3,6 +3,9 @@
 #include <assert.h>
 #include <conio.h>
 #include <windows.h>
+#include <string.h>
+#define TRUE 1
+#define FALSE 0
 void print_draw(int (*pc)[3]);
 void gotoxy(int xpos, int ypos);
 void showCursor(int visible);
@@ -35,17 +38,39 @@ int main(int argc,char **argv)
     pox=5;
     poy=2;
     ppic_func=print_draw;
+    gotoxy(5,2);
+    printf("*********************************************************\n");
+    gotoxy(5,3);
+    printf("*                                                       *\n");
+    gotoxy(5,4);
+    printf("*   Use Arrow keys to move the cursor                   *\n");
+    gotoxy(5,5);
+    printf("*                                                       *\n");
+    gotoxy(5,6);
+    printf("*   Use 'o' keys and 'x' keys to place content          *\n");
+    gotoxy(5,7);
+    printf("*                                                       *\n");
+    gotoxy(5,8);
+    printf("*   The same character is connected into three winning  *\n");
+    gotoxy(5,9);
+    printf("*                                                       *\n");
+    gotoxy(5,10);
+    printf("*********************************************************\n");
+    gotoxy(5,11);
+    system("pause");
     //print_draw(picture);
     (************ppic_func)(picture);
     gotoxy(24,2);
     printf("Coordinate Row=5 Col=2");
     gotoxy(5,2);
-    while (1){
+    while (TRUE){
         if (flat(picture)){
             system("CLS");
+            gotoxy(5,2);
             printf("This game is tied\n");
             _sleep(2000);
             //system("psuae");
+            system("CLS");
             system("Tictactoe_direction_control_over.exe");
         }
         position=getch();
@@ -74,7 +99,10 @@ int main(int argc,char **argv)
                     printf("Input instruction :  ");
                 }
                 scanf("%c",&Code);
-                if (Code=='y' || Code=='Y') {system("Tictactoe_direction_control_over.exe");}
+                if (Code=='y' || Code=='Y') {
+                    system("CLS");
+                    system("Tictactoe_direction_control_over.exe");
+                }
                 else if (Code=='n' || Code=='N'){
                     gotoxy(3,13);
                     printf("Goobye !!!\n");
@@ -118,7 +146,10 @@ int main(int argc,char **argv)
                     printf("Input instruction :  ");
                 }
                 scanf("%c",&Code);
-                if (Code=='y' || Code=='Y') {system("Tictactoe_direction_control_over.exe");}
+                if (Code=='y' || Code=='Y') {
+                    system("CLS");
+                    system("Tictactoe_direction_control_over.exe");
+                }
                 else if (Code=='n' || Code=='N'){
                     gotoxy(3,13);
                     printf("Goobye !!!\n");
@@ -161,6 +192,7 @@ int main(int argc,char **argv)
 
 void print_draw(int (*pc)[3]){
     system("CLS");
+    printf("\n");
     printf("        |     |     \n");
     printf("     %c  |  %c  |  %c \n", *(*(pc+0)+0), *(*(pc+0)+1), *(*(pc+0)+2));
     printf("   _____|_____|_____\n");
