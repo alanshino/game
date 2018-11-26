@@ -4,6 +4,8 @@
 #include <conio.h>
 #include <windows.h>
 #include <string.h>
+#include <time.h>
+#define FLAT 2
 #define TRUE 1
 #define FALSE 0
 void print_draw(int (*pc)[3]);
@@ -23,11 +25,14 @@ void (*pvoid_func) (void);
 int (*pint_func) (int (*)[3]);
 void (*ppox_poy) (int,int);
 void (*ppic_func) (int (*)[3]);
+typedef int (*pdint_func)(int (*)[3]);
 
 int main(int argc,char **argv)
 {
     char Code;
     int key=0;
+    pdint_func pointer_int_wincircle;
+    pdint_func pointer_int_winfork;
     char position;
     int picture[3][3]={0};
     for (int i=0;i<3;i++){
@@ -38,6 +43,8 @@ int main(int argc,char **argv)
     pox=5;
     poy=2;
     ppic_func=print_draw;
+    pointer_int_wincircle = win_check_circle;
+    pointer_int_winfork = win_check_fork;
     gotoxy(5,2);
     printf("***************************************************************\n");
     gotoxy(5,3);
@@ -78,6 +85,7 @@ int main(int argc,char **argv)
             system("CLS");
             gotoxy(5,2);
             printf("This game is tied\n");
+            gotoxy(24,2);
             _sleep(2000);
             //system("psuae");
             system("CLS");
@@ -89,7 +97,7 @@ int main(int argc,char **argv)
             gotoxy(24,4);
             printf("Place O in Row:%d Col:%d ",pox,poy);
             gotoxy(pox,poy);
-            if (win_check_circle(picture)){
+            if ((************pointer_int_wincircle)(picture)){
                 system("CLS");
                 gotoxy(3,2);
                 printf(" O Circle is win the game !!!\n\n");
@@ -135,7 +143,7 @@ int main(int argc,char **argv)
             gotoxy(24,4);
             printf("Place X in Row:%d Col:%d ",pox,poy);
             gotoxy(pox,poy);
-            if (win_check_fork(picture)){
+            if ((************pointer_int_winfork)(picture)){
                 system("CLS");
                 gotoxy(3,2);
                 printf(" X Fork is win the game !!!\n\n");
