@@ -39,30 +39,34 @@ int main(int argc,char **argv)
     poy=2;
     ppic_func=print_draw;
     gotoxy(5,2);
-    printf("***********************************************************\n");
+    printf("***************************************************************\n");
     gotoxy(5,3);
-    printf("*                                                         *\n");
+    printf("*                                                             *\n");
     gotoxy(5,4);
-    printf("*           Welcome to play Tic Tac Toe Game!!!           *\n");
+    printf("*             Welcome to play Tic Tac Toe Game!!!             *\n");
     gotoxy(5,5);
-    printf("*                                                         *\n");
+    printf("*                                                             *\n");
     gotoxy(5,6);
-    printf("*                                                         *\n");
+    printf("*                                                             *\n");
     gotoxy(5,7);
-    printf("* 1.  Use Arrow keys to move the cursor                   *\n");
+    printf("*   1.  Use Arrow keys to move the cursor                     *\n");
     gotoxy(5,8);
-    printf("*                                                         *\n");
+    printf("*                                                             *\n");
     gotoxy(5,9);
-    printf("* 2.  Use 'o' keys and 'x' keys to place content          *\n");
+    printf("*   2.  Use 'o' keys or 'O' keys to place content             *\n");
     gotoxy(5,10);
-    printf("*                                                         *\n");
+    printf("*                                                             *\n");
     gotoxy(5,11);
-    printf("* 3.  The same character is connected into three winning  *\n");
+    printf("*   3.  Use 'x' keys or 'X' keys to place content             *\n");
     gotoxy(5,12);
-    printf("*                                                         *\n");
+    printf("*                                                             *\n");
     gotoxy(5,13);
-    printf("***********************************************************\n");
+    printf("*   4.  The same character is connected into three winning    *\n");
     gotoxy(5,14);
+    printf("*                                                             *\n");
+    gotoxy(5,15);
+    printf("***************************************************************\n");
+    gotoxy(5,16);
     system("pause");
     //print_draw(picture);
     (************ppic_func)(picture);
@@ -80,7 +84,7 @@ int main(int argc,char **argv)
             system("Tictactoe_direction_control_over.exe");
         }
         position=getch();
-        if (position==111){
+        if (position==111 || position==79){
             circle(picture);
             gotoxy(24,4);
             printf("Place O in Row:%d Col:%d ",pox,poy);
@@ -126,7 +130,7 @@ int main(int argc,char **argv)
                     }
                 }
             }
-        }else if (position==120){
+        }else if (position==120 || position==88){
             forkk(picture);
             gotoxy(24,4);
             printf("Place X in Row:%d Col:%d ",pox,poy);
