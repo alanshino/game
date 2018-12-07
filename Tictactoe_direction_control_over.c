@@ -8,6 +8,7 @@
 #define FLAT 2
 #define TRUE 1
 #define FALSE 0
+void SetColor(int ForgC);
 void print_draw(int (*pc)[3]);
 void gotoxy(int xpos, int ypos);
 void showCursor(int visible);
@@ -25,6 +26,7 @@ void (*pvoid_func) (void);
 int (*pint_func) (int (*)[3]);
 void (*ppox_poy) (int,int);
 void (*ppic_func) (int (*)[3]);
+void (*psetcolor)(int)=SetColor;
 typedef int (*pdint_func)(int (*)[3]);
 
 int main(int argc,char **argv)
@@ -46,30 +48,51 @@ int main(int argc,char **argv)
     ppic_func=print_draw;
     pointer_int_wincircle = win_check_circle;
     pointer_int_winfork = win_check_fork;
+    (*psetcolor)(15);
     gotoxy(5,2);
     printf("***************************************************************\n");
     gotoxy(5,3);
     printf("*                                                             *\n");
     gotoxy(5,4);
-    printf("*             Welcome to play Tic Tac Toe Game!!!             *\n");
+    printf("*             ");
+    (*psetcolor)(10);
+    printf("Welcome to play Tic Tac Toe Game!!!");
+    (*psetcolor)(15);
+    printf("             *\n");
     gotoxy(5,5);
     printf("*                                                             *\n");
     gotoxy(5,6);
     printf("*                                                             *\n");
     gotoxy(5,7);
-    printf("*   1.  Use Arrow keys to move the cursor                     *\n");
+    printf("*   ");
+    (*psetcolor)(6);
+    printf("1.  Use Arrow keys to move the cursor");
+    (*psetcolor)(15);
+    printf("                     *\n");
     gotoxy(5,8);
     printf("*                                                             *\n");
     gotoxy(5,9);
-    printf("*   2.  Use 'o' keys or 'O' keys to place content             *\n");
+    printf("*   ");
+    (*psetcolor)(6);
+    printf("2.  Use 'o' keys or 'O' keys to place content");
+    (*psetcolor)(15);
+    printf("             *\n");
     gotoxy(5,10);
     printf("*                                                             *\n");
     gotoxy(5,11);
-    printf("*   3.  Use 'x' keys or 'X' keys to place content             *\n");
+    printf("*   ");
+    (*psetcolor)(6);
+    printf("3.  Use 'x' keys or 'X' keys to place content");
+    (*psetcolor)(15);
+    printf("             *\n");
     gotoxy(5,12);
     printf("*                                                             *\n");
     gotoxy(5,13);
-    printf("*   4.  The same character is connected into three winning    *\n");
+    printf("*   ");
+    (*psetcolor)(6);
+    printf("4.  The same character is connected into three winning");
+    (*psetcolor)(15);
+    printf("    *\n");
     gotoxy(5,14);
     printf("*                                                             *\n");
     gotoxy(5,15);
@@ -87,7 +110,7 @@ int main(int argc,char **argv)
             gotoxy(5,2);
             printf("This game is tied\n");
             gotoxy(24,2);
-            _sleep(2000);
+            Sleep(2000);
             //system("psuae");
             system("CLS");
             system("Tictactoe_direction_control_over.exe");
@@ -96,7 +119,9 @@ int main(int argc,char **argv)
         if (position==111 || position==79){
             circle(picture);
             gotoxy(24,4);
+            (*psetcolor)(11);
             printf("Place O in Row:%d Col:%d ",pox,poy);
+            (*psetcolor)(15);
             gotoxy(pox,poy);
             if ((************pointer_int_wincircle)(picture)){
                 system("CLS");
@@ -142,7 +167,9 @@ int main(int argc,char **argv)
         }else if (position==120 || position==88){
             forkk(picture);
             gotoxy(24,4);
+            (*psetcolor)(11);
             printf("Place X in Row:%d Col:%d ",pox,poy);
+            (*psetcolor)(15);
             gotoxy(pox,poy);
             if ((************pointer_int_winfork)(picture)){
                 system("CLS");
@@ -222,7 +249,9 @@ void print_draw(int (*pc)[3]){
     printf("     %c  |  %c  |  %c \n", *(*(pc+2)+0), *(*(pc+2)+1), *(*(pc+2)+2));
     printf("        |     |     \n\n");
     gotoxy(24,2);
+    //(*psetcolor)(11);
     printf("Coordinate Row:%d Col:%d ",pox,poy);
+    //(*psetcolor)(15);
     gotoxy(pox,poy);
 }
 
@@ -246,7 +275,9 @@ void showCursor(int visible)
 void up(void){
     if (poy>2){
         gotoxy(24,2);
+        (*psetcolor)(12);
         printf("Coordinate Row:%d Col:%d ",pox,poy-3);
+        (*psetcolor)(15);
         gotoxy(pox,poy-=3);
     }
     else
@@ -256,7 +287,9 @@ void up(void){
 void down(void){
     if (poy<6){
         gotoxy(24,2);
+        (*psetcolor)(12);
         printf("Coordinate Row:%d Col:%d ",pox,poy+3);
+        (*psetcolor)(15);
         gotoxy(pox,poy+=3);
     }
     else
@@ -266,7 +299,9 @@ void down(void){
 void left(void){
     if (pox>5){
         gotoxy(24,2);
+        (*psetcolor)(12);
         printf("Coordinate Row:%d Col:%d ",pox-6,poy);
+        (*psetcolor)(15);
         gotoxy(pox-=6,poy);
     }
     else
@@ -276,7 +311,9 @@ void left(void){
 void right(void){
     if (pox<17){
         gotoxy(24,2);
+        (*psetcolor)(12);
         printf("Coordinate Row:%d Col:%d ",pox+6,poy);
+        (*psetcolor)(15);
         gotoxy(pox+=6,poy);
     }
     else
@@ -454,4 +491,16 @@ int flat(int (*pc)[3]){
         return 1;
     }else
         return 0;
+}
+
+void SetColor(int ForgC){
+	WORD wColor;
+	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	if (GetConsoleScreenBufferInfo(hStdOut, &csbi))
+	{
+		wColor = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
+		SetConsoleTextAttribute(hStdOut, wColor);
+	}
+	return;
 }
