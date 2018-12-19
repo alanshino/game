@@ -44,6 +44,7 @@ void choice_mode(void);
 void(*pvoid_menu[3])(void) = { start_menu ,choice_mode,situation };
 void(*psetcolor[2])(int) = { showCursor ,SetColor };
 int mode,Score;
+int Snake_type = 0;
 using namespace std;
 
 int main(int argc,char **argv)
@@ -112,7 +113,14 @@ void draw_map(void) {
 void print_snake(int  i, snake *psnake) {
 	(*psetcolor[1])(10);
 	gotoxy(psnake[i].coordinate_x, psnake[i].coordinate_y);
-	cout << "&"; //"¡´"
+	if (Snake_type == 0){
+        cout << "C";
+	}else if (Snake_type == 1){
+        cout << "&";
+	}else if (Snake_type == 2){
+        cout << "@";
+	}
+    //"¡´"
 }
 
 void play_game(snake *psnake) {
@@ -264,7 +272,7 @@ void play_game(snake *psnake) {
 			cout << "*";
 			feed = 1;
 		}
-		if (psnake[0].coordinate_x == snake_food.coorx&&psnake[0].coordinate_y == snake_food.coory) {
+		if ((*(psnake+0)).coordinate_x == snake_food.coorx&&(*(psnake+0)).coordinate_y == snake_food.coory) {
 			(******************pgotoxy)(snake_food.coorx, snake_food.coory);
 			cout << " ";
 			body_long++;
@@ -294,6 +302,7 @@ void play_game(snake *psnake) {
     else if (code == 'N' || code == 'n'){
         cout << "Thank you !!!";
     }
+    (******************pshowcursor)(1);
 }
 
 void SetColor(int ForgC)
@@ -312,6 +321,7 @@ void SetColor(int ForgC)
 void start_menu(void) {
 	char c = ' ';
 	int Row = 12;
+	int row=43,col=22;
 	(*pgotoxy)(Row, 1);
 	(*psetcolor[1])(10);
 	cout << "*******************************************************************";
@@ -321,7 +331,7 @@ void start_menu(void) {
 	cout << "*                                                                 *";
 	(*pgotoxy)(Row, 4);
 	cout << "*                   ";
-	(*psetcolor[1])(15);
+	(*psetcolor[1])(11);
 	cout<<"Welcome to Snake Game !!!";
 	(*psetcolor[1])(10);
 	cout<<"                     *";
@@ -329,7 +339,7 @@ void start_menu(void) {
 	cout << "*                                                                 *";
 	(*pgotoxy)(Row, 6);
 	cout << "*              ";
-	(*psetcolor[1])(15);
+	(*psetcolor[1])(11);
 	cout << "Arrow keys control up,down,left,right";
 	(*psetcolor[1])(10);
 	cout << "              *";
@@ -337,7 +347,7 @@ void start_menu(void) {
 	cout << "*                                                                 *";
 	(*pgotoxy)(Row, 8);
 	cout << "*              ";
-	(*psetcolor[1])(15);
+	(*psetcolor[1])(11);
 	cout << "Eat food to increase the snake body";
 	(*psetcolor[1])(10);
 	cout<<"                *";
@@ -345,7 +355,7 @@ void start_menu(void) {
 	cout << "*                                                                 *";
 	(*pgotoxy)(Row, 10);
 	cout << "*                ";
-	(*psetcolor[1])(15);
+	(*psetcolor[1])(11);
 	cout<<"Hit the wall the snake will die";
 	(*psetcolor[1])(10);
 	cout<<"                  *";
@@ -377,7 +387,7 @@ void start_menu(void) {
 	cout << "*                                                                 *";
 	(*pgotoxy)(Row, 18);
 	cout << "*              ";
-	(*psetcolor[1])(11);
+	(*psetcolor[1])(15);
 	cout << "The above is the instructions for use";
 	(*psetcolor[1])(10);
 	cout<<"              *";
@@ -386,10 +396,94 @@ void start_menu(void) {
 	(*pgotoxy)(Row, 20);
 	cout << "*                                                                 *";
 	(*pgotoxy)(Row, 21);
-	cout << "*******************************************************************";
-	(*pgotoxy)(Row+22, 23);
-	(*psetcolor[1])(13);
-	system("pause");
+	cout << "*            ";
+	(*psetcolor[1])(12);
+	cout << "Snake Body      ";
+	(*psetcolor[1])(9);
+	cout << "[ C ]     [ & ]     [ @ ]";
+	(*psetcolor[1])(10);
+	cout <<"            *";
+	(*pgotoxy)(Row, 22);
+	cout << "*                                                                 *";
+	(*pgotoxy)(Row, 23);
+	cout << "*                                                                 *";
+	(*pgotoxy)(Row, 24);
+	cout << "***************** ";
+	(*psetcolor[1])(15);
+	cout << "Please choose the snake body";
+	(*psetcolor[1])(10);
+	cout << " ********************";
+	//system("pause");
+	(*pgotoxy)(row, 21);
+	(*psetcolor[1])(6);
+    cout << "C";
+    (*pgotoxy)(row, 21);
+	//system("pause");
+	while (TRUE){
+        c = _getch();
+        if (c == -32){
+            c = _getch();
+            switch (c){
+                case 75:
+                    if (row > 43){
+                        (*pgotoxy)(row, 21);
+                        if (row == 53){
+                            (*psetcolor[1])(9);
+                            cout << "&";
+                        }else if (row == 63){
+                            (*psetcolor[1])(9);
+                            cout << "@";
+                        }
+                        row-=10;
+                        (*pgotoxy)(row, 21);
+                        if (row == 43){
+                            (*psetcolor[1])(6);
+                            cout << "C";
+                            (*pgotoxy)(row, 21);
+                        }else if (row == 53){
+                            (*psetcolor[1])(6);
+                            cout << "&";
+                            (*pgotoxy)(row, 21);
+                        }
+                    }
+                    break;
+                case 77:
+                    if (row < 63){
+                        (*pgotoxy)(row, 21);
+                        if (row == 43){
+                            (*psetcolor[1])(9);
+                            cout << "C";
+                        }else if (row == 53){
+                            (*psetcolor[1])(9);
+                            cout << "&";
+                        }
+                        row+=10;
+                        (*pgotoxy)(row, 21);
+                        if (row == 53){
+                            (*psetcolor[1])(6);
+                            cout << "&";
+                            (*pgotoxy)(row, 21);
+                        }else if (row == 63){
+                            (*psetcolor[1])(6);
+                            cout << "@";
+                            (*pgotoxy)(row, 21);
+                        }
+                    }
+                    break;
+            }
+        }else if (c == 13){
+            if (row == 43){
+                Snake_type = 0;
+                break;
+            }else if (row == 53){
+                Snake_type = 1;
+                break;
+            }else if (row == 63){
+                Snake_type = 2;
+                break;
+            }
+        }
+	}
 	system("CLS");
 	(*pvoid_menu[1])();
 }
